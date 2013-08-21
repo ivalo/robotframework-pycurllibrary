@@ -1,0 +1,9 @@
+*** Settings ***
+Resource          resources.txt
+
+*** Variables ***
+
+*** Test Cases ***
+Simple Test
+    Verbose
+    
