@@ -4,6 +4,11 @@ Resource          resources.txt
 *** Variables ***
 
 *** Test Cases ***
-Simple Test
+Simple Get
     Verbose
+    Add Header  ${HEADER1}
+    Add Header  version=1
+    Set Url  http://localhost:53004/rest
+    Perform
+    Log  Response
     

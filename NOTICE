@@ -1,0 +1,11 @@
+jIvalo PycURLLibrary
+Copyright [2013] Markku Saarela
+
+This project includes software developed by jIvalo.
+https://github.com/ivalo/
+
+cUrl support is provided by the PycURL library package,
+which is open source software, written by Kjetil Jacobsen and Markus F.X.J. Oberhumer, 
+and copyright to these two. The original software is
+available from
+  http://pycurl.sourceforge.net/

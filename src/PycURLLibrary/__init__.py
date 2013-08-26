@@ -1,4 +1,22 @@
 # -*- coding: UTF-8 -*- 
+'''
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+'''
 import os
 from robot.api import logger
 
@@ -34,13 +52,6 @@ class PycURLLibrary():
         self._logger = logger
         self._url = Url()
         
-    def include(self):
-        """(HTTP) Include the HTTP-header in the output.
-        
-        The HTTP-header includes things like server-name, date of the document, HTTP-version and more...
-        """
-        self._url.set_include(True)
-        
     def verbose(self):
         """Makes the fetching more verbose/talkative.
         
@@ -72,9 +83,15 @@ class PycURLLibrary():
         """
         self._url.set_insecure(True)
         
-    def progress_bar(self):
-        """Make curl display progress as a simple progress bar instead of the standard, more informational, meter. 
+    def request_method(self, requestMethod):
+        """ Set's the request method. Default's to GET if Post Fields keyword is used POST is used
+        | Method |
+        | GET |
+        | POST |
+        | PUT |
+        | DELETE |
         """
+        self._url.get_context().set_request_method(requestMethod)
         
     def add_header(self, header):
         """(HTTP) Extra header to use when getting a web page.
@@ -85,24 +102,28 @@ class PycURLLibrary():
         | Add Header | Content-Type: text/xml; charset=UTF-8 |
         | Add Header | Frame.Version:3.0 |
         """
-        self._url.get_context().add_header(header)
+        self._logger.info('Header %s' % header)
+        self._url.get_context().add_header(str(header))
         
-    def data_file(self, datafile):
+        
+    def post_fields(self, postFields):
         """(HTTP) Sends the specified data in a POST request to the HTTP server, 
         in the same way that a browser does when a user has filled in an HTML form and presses the submit button. 
         This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.
 
-        Equivalent for <--data> argument starting @ with curl for files 
+        Equivalent for <--data> argument 
         
         Example:
-        | Data File | /home/data/test.xml |
+        | Post Fields | pizza=Quattro+Stagioni&extra=cheese |
         """
-        self._url.set_data(datafile)
+        self._url.set_post_fields(postFields)
+        if postFields is not None:
+            self._url.get_context().set_request_method('POST')
 
     def set_url(self, url):
         """Specify a URL to fetch.
         """
-        self._url.get_context().set_url(url)
+        self._url.get_context().set_url(str(url))
         
     def ca_path(self, cacert):
         """((SSL) Tells curl to use the specified certificate directory to verify the peer. 
@@ -138,3 +159,8 @@ class PycURLLibrary():
         """Get response from latest perform result
         """
         return self._url.get_response()
+
+    def response_header(self):
+        """Get response header from latest perform result
+        """
+        return self._url.get_response_header()
