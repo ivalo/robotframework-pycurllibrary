@@ -1,0 +1,7 @@
+include MANIFEST.in
+include LICENSE
+include LICENSE-cURL
+include LICENSE-PycURL
+include NOTICE
+include *.md
+

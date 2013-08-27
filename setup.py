@@ -29,14 +29,14 @@ from setuptools import setup
 execfile(join(dirname(__file__), 'src', 'PycURLLibrary', 'version.py'))
 
 DESCRIPTION = """
-PycURLLibrary is a HTTP web service testing library for Robot Framework
-that leverages PycURL to test HTTP and SOAP-based services.
+PycURLLibrary is client-side URL transfer test library for Robot Framework
+based on PycURL
 """[1:-1]
 
 setup(
     name             = 'robotframework-pycurllibrary',
     version          = VERSION,
-    description      = 'PyCurl testing library for Robot Framework',
+    description      = 'Robot Framework test library for client-side URL transfer',
     long_description = DESCRIPTION,
     author           = 'Markku Saarela',
     author_email     = 'ivalo@iki.fi',
@@ -46,16 +46,16 @@ setup(
     platforms        = 'any',
     classifiers      = [
                           "Development Status :: 3 - Alpha",
-                          "License :: OSI Approved :: Apache License 2.0",
+                          "License :: OSI Approved :: Apache Software License",
                           "Operating System :: OS Independent",
                           "Programming Language :: Python",
                           "Topic :: Software Development :: Testing"
                        ],
     py_modules       = ['ez_setup'],
     package_dir      = {'': 'src'},
+    packages         = ['PycURLLibrary'],
     install_requires = [
                         'robotframework >= 2.7.5', 
                         'pycurl>=7.19'
-                       ],
-    packages=['PycURLLibrary']
+                       ]
 )
