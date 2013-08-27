@@ -177,6 +177,8 @@ class Url(object):
             c.setopt(pycurl.POSTFIELDS, self._post_fields)
 
         headers = self.get_context().get_headers() 
+        print headers
+        
         self._logger.info(headers)
         if headers:
             c.setopt(pycurl.HTTPHEADER, headers)

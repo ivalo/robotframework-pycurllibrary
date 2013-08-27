@@ -71,6 +71,9 @@ class Ctx(object):
     def get_headers(self):
         return self._headers
         
+    def set_headers(self, headers):
+        self._headers = headers
+        
     def get_response(self):
         return self._response
 

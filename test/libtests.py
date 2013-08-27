@@ -36,20 +36,33 @@ class Test(unittest.TestCase):
 
     def testget(self):
         lib = PycURLLibrary();
-        #messageFile = join(testenv.ROOT_DIR, 'vakuutusmuutos_rest.xml')
-        #print messageFile
-        #f = open(messageFile, 'r')
-        #data = f.read()
-        #f.close()
         
         lib.verbose()
         lib.add_header('Content-Type: text/xml; charset=UTF-8')
-        lib.add_header('Version=1')
+        lib.add_header('Version: 1')
         
         lib.set_url('http://localhost:53004/rest')
-        #lib.set_url('http://localhost:53001/echo?version=99&palveluNimi=raidekayttoonottolupa')
 
-        #lib.post_fields(data)
+        lib.perform()
+        response = lib.response()
+        if response is None:
+            raise NotImplementedError
+        print 'GET Response:'
+        print response
+        responseHeader = lib.response_header()
+        print 'GET Response Header:'
+        print responseHeader
+        pass
+
+    def testgetHeaderFile(self):
+        lib = PycURLLibrary();
+        
+        lib.verbose()
+        headerFile = join(testenv.ROOT_DIR, 'headers-file.txt')
+        lib.headers_file(headerFile)
+        
+        lib.set_url('http://localhost:53004/rest')
+
         lib.perform()
         response = lib.response()
         if response is None:
@@ -72,7 +85,6 @@ class Test(unittest.TestCase):
         lib.verbose()
         
         lib.set_url('http://localhost:53004/soap')
-        #lib.set_url('http://localhost:53001/echo?version=99&palveluNimi=raidekayttoonottolupa')
 
         lib.post_fields(data)
         lib.perform()

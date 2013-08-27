@@ -35,3 +35,7 @@ Install it with following command:
         python setup.py register
         python setup.py sdist upload
 
+## Generate Keyword document
+
+        python -m robot.libdoc PycURLLibrary PycURLLibrary.html
+

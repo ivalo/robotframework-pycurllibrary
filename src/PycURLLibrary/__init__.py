@@ -105,6 +105,16 @@ class PycURLLibrary():
         self._logger.info('Header %s' % header)
         self._url.get_context().add_header(str(header))
         
+    def headers_file(self, headerFile):
+        """(HTTP) Extra headers to use when getting a web page.
+        
+        *headerFile* contains all headers.
+        
+        """
+        headers = [line.rstrip() for line in open(headerFile, 'r')] 
+        self._logger.info('Headers %s' % headers)
+        self._url.get_context().set_headers(headers)
+        
         
     def post_fields(self, postFields):
         """(HTTP) Sends the specified data in a POST request to the HTTP server, 

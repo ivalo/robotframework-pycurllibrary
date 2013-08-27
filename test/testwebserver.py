@@ -52,6 +52,9 @@ class TestRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/rest':
+            print self.headers
+            #print self.headers['Content-Type']
+            #print self.headers['Version']
             self.send_response(200, "OK")
             #self.send_header('Location', '/200')
             self.end_headers()            
