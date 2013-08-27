@@ -45,7 +45,7 @@ setup(
     keywords         = 'robotframework testing testautomation pycurl curl',
     platforms        = 'any',
     classifiers      = [
-                          "Development Status :: 3 - Alpha",
+                          "Development Status :: 4 - Beta",
                           "License :: OSI Approved :: Apache Software License",
                           "Operating System :: OS Independent",
                           "Programming Language :: Python",

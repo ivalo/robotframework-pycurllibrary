@@ -26,6 +26,10 @@ Install it with following command:
         python
         import PycURLLibrary
 
+### Upgrade PycURLLibrary
+
+        pip install robotframework-pycurllibrary --upgrade
+
 ## Distribution
 
         python setup.py register
