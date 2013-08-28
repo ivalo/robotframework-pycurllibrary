@@ -110,6 +110,13 @@ class PycURLLibrary():
         
         *headerFile* contains all headers.
         
+        One line is one header. Note do not make line feed after last header.
+
+        | Headers File | /data/headers.txt |
+        
+        Example of content of *headerFile*:
+        | Version: 2 |
+        | Content-Type: text/xml; charset=UTF-8 |        
         """
         headers = [line.rstrip() for line in open(headerFile, 'r')] 
         self._logger.info('Headers %s' % headers)
@@ -129,6 +136,22 @@ class PycURLLibrary():
         self._url.set_post_fields(postFields)
         if postFields is not None:
             self._url.get_context().set_request_method('POST')
+
+    def post_fields_file(self, postFieldsFile):
+        """(HTTP) Sends the specified data in a POST request to the HTTP server, 
+        in the same way that a browser does when a user has filled in an HTML form and presses the submit button. 
+        This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded.
+
+        Equivalent for <--data> @argument 
+        
+        Example:
+        | Post Fields File | /data/message.txt |
+        """
+        f = open(postFieldsFile, 'r')
+        postFields = f.read()
+        f.close()
+        self._url.set_post_fields(postFields)
+        self._url.get_context().set_request_method('POST')
 
     def set_url(self, url):
         """Specify a URL to fetch.

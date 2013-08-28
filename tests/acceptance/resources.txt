@@ -4,3 +4,8 @@ Library  OperatingSystem
 
 *** Variables ***
 ${HEADER1}  Content-Type: text/xml; charset=UTF-8
+
+*** Keywords ***
+Read File ${file}
+    ${content} =  Get File  ${file}
+    [return]  ${content}

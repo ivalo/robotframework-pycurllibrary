@@ -121,6 +121,9 @@ class Url(object):
             if case('HTTP'):
                 self._prepareHTTP(c)
                 break
+            if case('HTTPS'):
+                self._prepareHTTP(c)
+                break
             if case('two'):
                 print 2
                 break
@@ -174,10 +177,10 @@ class Url(object):
         if self._post_fields is None:
             self._logger.warn("Post Fields is missing")
         else:
-            c.setopt(pycurl.POSTFIELDS, self._post_fields)
+            self._logger.info("Post Fields %s" % (self._post_fields))
+            c.setopt(pycurl.POSTFIELDS, str(self._post_fields))
 
         headers = self.get_context().get_headers() 
-        print headers
         
         self._logger.info(headers)
         if headers:

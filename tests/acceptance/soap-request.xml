@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+<S:Body>
+    <ns2:id xmlns:ns2="http://ws.poc.jivalo/hello/v1">999</ns2:id>
+</S:Body>
+</S:Envelope>
