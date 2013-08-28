@@ -31,8 +31,10 @@ execfile(os.path.join(THIS_DIR, 'version.py'))
 
 __version__ = VERSION
 
-__all__ = ['include', 'verbose', 'add_header', 'insecure', 
-           'data_file', 'set_url', 'ca_path', 'cert', 'key', 'perform', 'response'
+__all__ = ['include', 'verbose', 'insecure', 'add_header', 'headers_file', 
+           'post_fields', 'post_fields_file', 'request_method', 'data_file', 
+           'set_url', 'ca_path', 'cert', 'key', 'perform', 'response', 
+           'response_header'
           ]
 
 class PycURLLibrary():

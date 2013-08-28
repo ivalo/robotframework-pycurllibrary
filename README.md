@@ -9,6 +9,16 @@ It supports FTP, FTPS, HTTP, HTTPS, SCP, SFTP, TFTP, TELNET, DICT, LDAP, LDAPS, 
 
 ## Installation
 
+### Prerequisite
+
+Python-dev
+PycUrl must be installed.
+
+#### Ubuntu
+sudo apt-get install python-dev
+sudo apt-get install python-pycurl
+
+
 ### Installing using pip (recommended)
 
         pip install robotframework-pycurllibrary
@@ -37,5 +47,5 @@ Install it with following command:
 
 ## Generate Keyword document
 
-        python -m robot.libdoc PycURLLibrary PycURLLibrary.html
+        python -m robot.libdoc src/PycURLLibrary PycURLLibrary.html
 
