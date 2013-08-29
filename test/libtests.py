@@ -34,6 +34,24 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def testSetterStyleKeywords(self):
+        lib = PycURLLibrary();
+        
+        lib.verbose()
+        lib.insecure()
+        lib.request_method('GET')
+        lib.add_header('Content-Type: text/xml; charset=UTF-8')
+        lib.add_header('Version: 1')
+        
+        lib.set_url('http://localhost:53004/rest')
+        lib.ca_path('/tmp')
+        lib.cert('cert.pem')
+        lib.key('key.pem')
+        lib.post_fields('testing')
+        postFieldsFile = join(testenv.ROOT_DIR, 'soap-request.xml')
+        lib.post_fields_file(postFieldsFile)
+        pass
+
     def testget(self):
         lib = PycURLLibrary();
         

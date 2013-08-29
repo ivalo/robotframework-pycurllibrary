@@ -68,14 +68,13 @@ class PycURLLibrary():
         """
         self._url.set_verbose(True)
         
-    def no_buffer(self):
-        """Disables the buffering of the output stream.
-        
-        In normal work situations, curl will use a standard buffered output stream that will have the effect that it will output the data in chunks, 
-        not necessarily exactly when the data arrives. Using this option will disable that buffering.
-
-        Note that this is the negated option name documented. You can thus use --buffer to enforce the buffering. 
-        """
+#    def no_buffer(self):
+#        """Disables the buffering of the output stream.
+#        
+#        In normal work situations, curl will use a standard buffered output stream that will have the effect that it will output the data in chunks, 
+#        not necessarily exactly when the data arrives. Using this option will disable that buffering.
+#        Note that this is the negated option name documented. You can thus use --buffer to enforce the buffering. 
+#        """
         
     def insecure(self):
         """(SSL) This option explicitly allows curl to perform "insecure" SSL connections and transfers.
@@ -160,14 +159,14 @@ class PycURLLibrary():
         """
         self._url.get_context().set_url(str(url))
         
-    def ca_path(self, cacert):
+    def ca_path(self, cacertDirectory):
         """((SSL) Tells curl to use the specified certificate directory to verify the peer. 
         Multiple paths can be provided by separating them with ":" (e.g. "path1:path2:path3"). 
         The certificates must be in PEM format. 
         
         Equivalent for <--capath> argument with curl
         """
-        self._url.get_context().set_cacert(cacert)
+        self._url.get_context().set_capath(cacertDirectory)
         
     def cert(self, cert):
         """(SSL) Tells curl to use the specified client certificate file when getting a file with HTTPS, 

@@ -44,7 +44,7 @@ class Ctx(object):
     def get_capath(self):
         return self._capath
     
-    def set__capath(self, capath):
+    def set_capath(self, capath):
         self._capath = capath
     
     def get_cert(self):
