@@ -108,7 +108,8 @@ class Url(object):
         
         `url` is the URL relative to t
         """
-        # self.get_context().set_response(None)
+        self.get_context().set_response(None)
+        self.get_context().set_response_header(None)
         c = pycurl.Curl()
         
         if self._verbose:
@@ -119,10 +120,10 @@ class Url(object):
         bufResponseHeader = None
         for case in switch(protocol):
             if case('HTTP'):
-                self._prepareHTTP(c)
+                bufResponseHeader = self._prepareHTTP(c)
                 break
             if case('HTTPS'):
-                self._prepareHTTP(c)
+                bufResponseHeader = self._prepareHTTPS(c)
                 break
             if case('two'):
                 print 2
@@ -159,7 +160,14 @@ class Url(object):
         
         for case in switch(protocol):
             if case('HTTP'):
-                self.get_context().set_response_header(bufResponse.getvalue())
+                if bufResponseHeader is not None:
+                    self.get_context().set_response_header(bufResponseHeader.getvalue())
+                    bufResponseHeader.close()
+                break
+            if case('HTTPS'):
+                if bufResponseHeader is not None:
+                    self.get_context().set_response_header(bufResponseHeader.getvalue())
+                    bufResponseHeader.close()
                 break
             if case(): # default
                 break
@@ -173,7 +181,6 @@ class Url(object):
     def _prepareCommonHTTP(self, c):
         """
         """
-        c.setopt(pycurl.HEADER, True)
         if self._post_fields is None:
             self._logger.warn("Post Fields is missing")
         else:
@@ -188,12 +195,18 @@ class Url(object):
         else:
             self._logger.info("Empty headers")
 
-        #bufResponseHeader = cStringIO.StringIO()
-        #c.setopt(pycurl.HEADERFUNCTION, bufResponseHeader.write)
-        # replace with callback method
-        
-        
+        bufResponseHeader = cStringIO.StringIO()
+        c.setopt(pycurl.HEADERFUNCTION, bufResponseHeader.write)
+        return bufResponseHeader
+               
     def _prepareHTTP(self, c):
         """
         """
-        self._prepareCommonHTTP(c)
+        bufResponseHeader = self._prepareCommonHTTP(c)
+        return bufResponseHeader    
+    
+    def _prepareHTTPS(self, c):
+        """
+        """
+        bufResponseHeader = self._prepareCommonHTTP(c)
+        return bufResponseHeader

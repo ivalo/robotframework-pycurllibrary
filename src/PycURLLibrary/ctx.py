@@ -81,7 +81,7 @@ class Ctx(object):
         self._response = response
 
     def get_response_header(self):
-        return self._response
+        return self._response_header
 
     def set_response_header(self, response_header):
         self._response_header = response_header
