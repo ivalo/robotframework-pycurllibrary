@@ -67,8 +67,8 @@ class Test(unittest.TestCase):
             raise NotImplementedError
         print 'GET Response:'
         print response
-        responseHeader = lib.response_header()
-        print 'GET Response Header:'
+        responseHeader = lib.response_headers()
+        print 'GET Response Headers:'
         print responseHeader
         pass
 
@@ -87,8 +87,8 @@ class Test(unittest.TestCase):
             raise NotImplementedError
         print 'GET Response:'
         print response
-        responseHeader = lib.response_header()
-        print 'GET Response Header:'
+        responseHeader = lib.response_headers()
+        print 'GET Response Headers:'
         print responseHeader
         pass
 
@@ -111,9 +111,12 @@ class Test(unittest.TestCase):
             raise NotImplementedError
         print 'POST Response:'
         print response
-        responseHeader = lib.response_header()
-        print 'POST Response Header:'
+        responseHeader = lib.response_headers()
+        print 'POST Response Headers:'
         print responseHeader
+        responseStatus = lib.http_response_status()
+        print 'HTTP Response Status:'
+        print responseStatus
         pass
 
 

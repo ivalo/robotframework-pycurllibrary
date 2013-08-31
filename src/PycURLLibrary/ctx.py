@@ -30,9 +30,10 @@ class Ctx(object):
         self._cert = None
         self._key = None
         self._headers = []
-        self._response_header = None
+        self._response_headers = None
         self._protocol = None
         self._request_method = 'GET'
+        self._response_status = None
         
     def get_url(self):
         return self._url
@@ -80,12 +81,20 @@ class Ctx(object):
     def set_response(self, response):
         self._response = response
 
-    def get_response_header(self):
-        return self._response_header
+    def get_response_headers(self):
+        return self._response_headers
 
-    def set_response_header(self, response_header):
-        self._response_header = response_header
+    def set_response_headers(self, responseHeaders):
+        if responseHeaders is None:
+            self._response_headers = None
+            self._response_status = None
+        else:
+            self._response_headers = responseHeaders.splitlines()
+            self._response_status = self._parseResponseLine()
         
+    def get_response_status(self):
+        return self._response_status
+
     def get_protocol(self):
         return self._protocol
 
@@ -93,3 +102,10 @@ class Ctx(object):
         i = url.find(':')
         self._protocol = url[0:i].upper()
         
+    def _parseResponseLine(self):
+        isHttpStatusLine = self._response_headers[0].startswith('HTTP')
+        if isHttpStatusLine:
+            statusLine = self._response_headers[0].split()
+            return '{0} {1}'.format(statusLine[1], statusLine[2])
+        else:
+            return None

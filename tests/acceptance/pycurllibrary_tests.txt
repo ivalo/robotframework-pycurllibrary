@@ -10,7 +10,9 @@ Simple Rest
     Add Header  version:1
     Set Url  http://localhost:53004/rest
     Perform
-    Log  Response
+    Log HTTP Response Headers
+    Log HTTP Response Status
+    Log Response
 
 Simple Soap
     Verbose
@@ -21,7 +23,7 @@ Simple Soap
     Log  ${message}
     Post Fields  ${message}
     Perform
-    Log  Response
+    Log Response
         
 Simple Soap Headers File
     Verbose
@@ -29,5 +31,5 @@ Simple Soap Headers File
     Headers File  /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/headers-file.txt
     Post Fields File   /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/soap-request.xml
     Perform
-    Log  Response
+    Log Response
         

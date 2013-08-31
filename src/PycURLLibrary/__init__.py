@@ -192,9 +192,53 @@ class PycURLLibrary():
     def response(self):
         """Get response from latest perform result
         """
-        return self._url.get_response()
+        return self._url.get_context().get_response()
 
-    def response_header(self):
-        """Get response header from latest perform result
+    def response_headers(self):
+        """Get response headers from latest perform result for protocols having headers preceding the data (like HTTP)
         """
-        return self._url.get_response_header()
+        return self._url.get_context().get_response_headers()
+
+    def http_response_status(self):
+        """Get response status from latest HTTP response status line
+        """
+        return self._url.get_context().get_response_status()
+
+    def log_response(self, log_level='INFO'):
+        """
+        Logs the response of the URL transfer.
+
+        Specify `log_level` (default: "INFO") to set the log level.
+        """        
+        if self.response():
+            self._logger.write("Response body:", log_level)
+            self._logger.write(self.response(), log_level)
+        else:
+            self._logger.debug("No response received", log_level)
+
+    def log_response_headers(self, log_level='INFO'):
+        """
+        Logs the response headers for protocols having headers preceding the data (like HTTP), line by line.
+
+        Specify `log_level` (default: "INFO") to set the log level.
+        """        
+        if self.response_headers():
+            self._logger.write("HTTP Response headers:", log_level)
+            for header in self.response_headers():
+                self._logger.write(header, log_level)
+        else:
+            self._logger.debug("No HTTP response headers received", log_level)
+        
+
+    def log_http_response_status(self, log_level='INFO'):
+        """
+        Logs the HTTP response header status line.
+
+        Specify `log_level` (default: "INFO") to set the log level.
+        """        
+        if self.http_response_status():
+            self._logger.write("HTTP Response status:", log_level)
+            self._logger.write(self.http_response_status(), log_level)
+        else:
+            self._logger.debug("No HTTP response status received", log_level)
+        

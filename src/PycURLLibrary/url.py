@@ -92,16 +92,6 @@ class Url(object):
     def set_context(self, context):
         self._context = context
 
-    def get_response(self):
-        #if not self.get_context().get_response():
-        #    raise Exception(
-        #        'No request available, use Perform to create one.')
-        return self.get_context().get_response()
-
-    def get_response_header(self):
-        return self.get_context().get_response_header()
-
-        
     def perform(self):
         """
         Issues a URL perform.
@@ -109,7 +99,7 @@ class Url(object):
         `url` is the URL relative to t
         """
         self.get_context().set_response(None)
-        self.get_context().set_response_header(None)
+        self.get_context().set_response_headers(None)
         c = pycurl.Curl()
         
         if self._verbose:
@@ -124,15 +114,6 @@ class Url(object):
                 break
             if case('HTTPS'):
                 bufResponseHeader = self._prepareHTTPS(c)
-                break
-            if case('two'):
-                print 2
-                break
-            if case('ten'):
-                print 10
-                break
-            if case('eleven'):
-                print 11
                 break
             if case(): # default
                 self._logger.warn("Unknown Protocol %s !" % (protocol))
@@ -150,23 +131,22 @@ class Url(object):
         if self.get_context().get_key() is not None:
             c.setopt(pycurl.SSLKEY, self.get_context().get_key())
             
-        self._logger.info("URL %s" % (self.get_context().get_url()))
         c.setopt(pycurl.URL, self.get_context().get_url())
         bufResponse = cStringIO.StringIO()
         c.setopt(pycurl.WRITEFUNCTION, bufResponse.write)
-        self._logger.info("Performing Perform on %s" % (self.get_context().get_url()))
+        self._logger.info("Perform for %s" % (self.get_context().get_url()))
                                                               
         c.perform()
         
         for case in switch(protocol):
             if case('HTTP'):
                 if bufResponseHeader is not None:
-                    self.get_context().set_response_header(bufResponseHeader.getvalue())
+                    self.get_context().set_response_headers(bufResponseHeader.getvalue())
                     bufResponseHeader.close()
                 break
             if case('HTTPS'):
                 if bufResponseHeader is not None:
-                    self.get_context().set_response_header(bufResponseHeader.getvalue())
+                    self.get_context().set_response_headers(bufResponseHeader.getvalue())
                     bufResponseHeader.close()
                 break
             if case(): # default
@@ -182,7 +162,7 @@ class Url(object):
         """
         """
         if self._post_fields is None:
-            self._logger.warn("Post Fields is missing")
+            self._logger.info("No Post Fields")
         else:
             self._logger.info("Post Fields %s" % (self._post_fields))
             c.setopt(pycurl.POSTFIELDS, str(self._post_fields))

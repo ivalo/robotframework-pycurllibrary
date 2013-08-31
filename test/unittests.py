@@ -16,4 +16,32 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 '''
-VERSION = '0.8'
+'''
+Created on 28 May 2013
+
+@author: Markku Saarela
+'''
+import unittest
+
+class Test(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def testStringHandling(self):
+        header = 'HTTP/1.1 200 OK\nX-Backside-Transport: FAIL FAIL\nConnection: Keep-Alive\nTransfer-Encoding: chunked\nContent-Type: text/xml\n'
+        headerLines = header.splitlines()
+        print headerLines 
+        statusLine = headerLines[0]
+        isHttpStatusLine = statusLine.upper().startswith('HTTP')
+        print isHttpStatusLine
+        print statusLine
+        pass
+
+
+if __name__ == "__main__":
+    # import sys;sys.argv = ['', 'Test.testName']
+    unittest.main()
