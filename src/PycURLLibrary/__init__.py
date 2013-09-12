@@ -242,3 +242,10 @@ class PycURLLibrary():
         else:
             self._logger.debug("No HTTP response status received", log_level)
         
+    def log_version(self, log_level='INFO'):
+        """
+        Logs the PycURLLibrary Version.
+
+        Specify `log_level` (default: "INFO") to set the log level.
+        """
+        self._logger.write("PycURLLibrary version %s" % (self.ROBOT_LIBRARY_VERSION), log_level)

@@ -119,6 +119,37 @@ class Test(unittest.TestCase):
         print responseStatus
         pass
 
+    def testcerts(self):
+        lib = PycURLLibrary();
+        messageFile = join(testenv.ROOT_DIR, 'soap-request.xml')
+        clientCertFile = join(testenv.ROOT_DIR, 'DPKehit1.cer')
+        privateKeyFile = join(testenv.ROOT_DIR, 'DPKehit1-privkey.pem')
+        print messageFile
+        print clientCertFile
+        print privateKeyFile
+        
+        lib.verbose()
+        
+        lib.set_url('http://localhost:53004/soap')
+
+        lib.post_fields_file(messageFile)
+        lib.cert(clientCertFile)
+        lib.key(privateKeyFile)
+        lib.perform()
+        response = lib.response()
+        if response is None:
+            raise NotImplementedError
+        print 'POST Response:'
+        print response
+        responseHeader = lib.response_headers()
+        print 'POST Response Headers:'
+        print responseHeader
+        responseStatus = lib.http_response_status()
+        print 'HTTP Response Status:'
+        print responseStatus
+        pass
+
+
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']

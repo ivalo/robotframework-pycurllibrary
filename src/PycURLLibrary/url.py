@@ -123,13 +123,17 @@ class Url(object):
             c.setopt(pycurl.SSL_VERIFYPEER, False)
            
         if self.get_context().get_cert() is not None:
-            c.setopt(pycurl.SSLCERT, self.get_context().get_cert())
+            cert = self.get_context().get_cert();
+            self._logger.info("Client Certificate File %s" % (cert))
+            c.setopt(pycurl.SSLCERT, cert)
             
         if self.get_context().get_capath() is not None:
             c.setopt(pycurl.CAPATH, self.get_context().get_capath())
             
         if self.get_context().get_key() is not None:
-            c.setopt(pycurl.SSLKEY, self.get_context().get_key())
+            privateKey = self.get_context().get_key()
+            self._logger.info("Private Key File %s" % (privateKey))
+            c.setopt(pycurl.SSLKEY, privateKey)
             
         c.setopt(pycurl.URL, self.get_context().get_url())
         bufResponse = cStringIO.StringIO()

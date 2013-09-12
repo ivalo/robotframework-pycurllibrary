@@ -27,6 +27,11 @@ pip-log.txt
 nosetests.xml
 results/
 
+# Robot Framework tests output
+log.html
+output.xml
+report.html
+
 # Translations
 *.mo
 

@@ -5,14 +5,16 @@ Resource          resources.txt
 
 *** Test Cases ***
 Simple Rest
+    Log Variables
     Verbose
     Add Header  ${HEADER1}
     Add Header  version:1
     Set Url  http://localhost:53004/rest
     Perform
-    Log HTTP Response Headers
-    Log HTTP Response Status
+    Log Version
+    Log Http Response Status
     Log Response
+    Log Response Headers
 
 Simple Soap
     Verbose
@@ -29,6 +31,8 @@ Simple Soap Headers File
     Verbose
     Set Url  http://localhost:53004/soap
     Headers File  /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/headers-file.txt
+    Cert  /home/ivalo/git/robotframework-pycurllibrary/DPKehit1.cer
+    Key  /home/ivalo/git/robotframework-pycurllibrary/DPKehit1-privkey.pem
     Post Fields File   /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/soap-request.xml
     Perform
     Log Response
