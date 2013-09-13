@@ -120,7 +120,9 @@ class Url(object):
                 # No need to break here, it'll stop anyway
         
         if self._insecure:
-            c.setopt(pycurl.SSL_VERIFYPEER, False)
+            self._logger.info("Insecure SSL enabled")
+            c.setopt(pycurl.SSL_VERIFYHOST, 0)
+            c.setopt(pycurl.SSL_VERIFYPEER, 0)
            
         if self.get_context().get_client_certificate_file() is not None:
             cert = self.get_context().get_client_certificate_file();
@@ -149,7 +151,6 @@ class Url(object):
                 self._logger.warn("Wrong setopt SSLKEY value %s" % (privateKey))
                 raise TypeError(t)
             
-        self._logger.info("URL %s" % (self.get_context().get_url()))
         try:
             c.setopt(pycurl.URL, self.get_context().get_url())
         except TypeError, t:
@@ -199,6 +200,7 @@ class Url(object):
         
         self._logger.info(headers)
         if headers:
+            self._logger.info("Headers %s" % (headers))
             try:
                 c.setopt(pycurl.HTTPHEADER, headers)
             except TypeError, t:
