@@ -46,7 +46,7 @@ class Test(unittest.TestCase):
         lib.set_url('http://localhost:53004/rest')
         lib.ca_path('/tmp')
         lib.client_certificate_file('cert.pem')
-        lib.key('key.pem')
+        lib.private_key_file('key.pem')
         lib.post_fields('testing')
         postFieldsFile = join(testenv.ROOT_DIR, 'soap-request.xml')
         lib.post_fields_file(postFieldsFile)
@@ -134,7 +134,7 @@ class Test(unittest.TestCase):
 
         lib.post_fields_file(messageFile)
         lib.client_certificate_file(clientCertFile)
-        lib.key(privateKeyFile)
+        lib.private_key_file(privateKeyFile)
         lib.perform()
         response = lib.response()
         if response is None:
@@ -148,7 +148,6 @@ class Test(unittest.TestCase):
         print 'HTTP Response Status:'
         print responseStatus
         pass
-
 
 
 if __name__ == "__main__":

@@ -176,7 +176,7 @@ class PycURLLibrary():
         """
         self._url.get_context().set_cert(cert)
         
-    def key(self, key):
+    def private_key_file(self, key):
         """(SSL/SSH) Private key file name. 
         Allows you to provide your private key in this separate file. 
 
