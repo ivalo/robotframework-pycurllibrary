@@ -50,6 +50,7 @@ class Test(unittest.TestCase):
         lib.post_fields('testing')
         postFieldsFile = join(testenv.ROOT_DIR, 'soap-request.xml')
         lib.post_fields_file(postFieldsFile)
+        lib.server_connection_establishment_timeout('30')
         pass
 
     def testget(self):
@@ -130,6 +131,7 @@ class Test(unittest.TestCase):
         
         lib.verbose()
         
+        lib.server_connection_establishment_timeout('30')
         lib.set_url('http://localhost:53004/soap')
 
         lib.post_fields_file(messageFile)

@@ -76,6 +76,13 @@ class PycURLLibrary():
 #        Note that this is the negated option name documented. You can thus use --buffer to enforce the buffering. 
 #        """
         
+    def server_connection_establishment_timeout(self, timeout):
+        """The maximum time in seconds that you allow the connection to the server to take (long value).
+        This only limits the connection phase, once it has connected, this option is of no more use. 
+        Set to zero to switch to the default built-in connection timeout - 300 seconds.
+        """
+        self._url.get_context().set_server_connection_establishment_timeout(long(str(timeout)))
+        
     def insecure_ssl(self):
         """(SSL) This option explicitly allows curl to perform "insecure" SSL connections and transfers.
         

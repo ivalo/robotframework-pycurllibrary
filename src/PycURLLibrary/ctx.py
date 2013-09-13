@@ -34,6 +34,7 @@ class Ctx(object):
         self._protocol = None
         self._request_method = 'GET'
         self._response_status = None
+        self._server_connection_establishment_timeout = None
         
     def get_url(self):
         return self._url
@@ -41,6 +42,12 @@ class Ctx(object):
     def set_url(self, url):
         self._url = url
         self._parse_protocol(url)
+        
+    def get_server_connection_establishment_timeout(self):
+        return self._server_connection_establishment_timeout
+        
+    def set_server_connection_establishment_timeout(self, timeout):
+        self._server_connection_establishment_timeout = timeout
         
     def get_capath(self):
         return self._capath
