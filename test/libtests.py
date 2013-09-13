@@ -38,14 +38,14 @@ class Test(unittest.TestCase):
         lib = PycURLLibrary();
         
         lib.verbose()
-        lib.insecure()
+        lib.insecure_ssl()
         lib.request_method('GET')
         lib.add_header('Content-Type: text/xml; charset=UTF-8')
         lib.add_header('Version: 1')
         
         lib.set_url('http://localhost:53004/rest')
         lib.ca_path('/tmp')
-        lib.cert('cert.pem')
+        lib.client_certificate_file('cert.pem')
         lib.key('key.pem')
         lib.post_fields('testing')
         postFieldsFile = join(testenv.ROOT_DIR, 'soap-request.xml')
@@ -133,7 +133,7 @@ class Test(unittest.TestCase):
         lib.set_url('http://localhost:53004/soap')
 
         lib.post_fields_file(messageFile)
-        lib.cert(clientCertFile)
+        lib.client_certificate_file(clientCertFile)
         lib.key(privateKeyFile)
         lib.perform()
         response = lib.response()

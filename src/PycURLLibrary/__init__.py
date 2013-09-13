@@ -168,7 +168,7 @@ class PycURLLibrary():
         """
         self._url.get_context().set_capath(cacertDirectory)
         
-    def cert(self, cert):
+    def client_certificate_file(self, cert):
         """(SSL) Tells curl to use the specified client certificate file when getting a file with HTTPS, 
         FTPS or another SSL-based protocol. The certificate must be in PEM format
 
