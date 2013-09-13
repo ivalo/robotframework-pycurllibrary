@@ -76,7 +76,7 @@ class PycURLLibrary():
 #        Note that this is the negated option name documented. You can thus use --buffer to enforce the buffering. 
 #        """
         
-    def insecure(self):
+    def insecure_ssl(self):
         """(SSL) This option explicitly allows curl to perform "insecure" SSL connections and transfers.
         
         All SSL connections are attempted to be made secure by using the CA certificate bundle installed by default. 
