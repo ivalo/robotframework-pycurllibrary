@@ -27,8 +27,8 @@ class Ctx(object):
         self._url = None
         self._response = None
         self._capath = None
-        self._cert = None
-        self._key = None
+        self._client_certificate_file = None
+        self._private_key_file = None
         self._headers = []
         self._response_headers = None
         self._protocol = None
@@ -48,17 +48,17 @@ class Ctx(object):
     def set_capath(self, capath):
         self._capath = capath
     
-    def get_cert(self):
-        return self._cert
+    def get_client_certificate_file(self):
+        return self._client_certificate_file
     
-    def set_cert(self, cert):
-        self._cert = cert
+    def set_client_certificate_file(self, client_certificate_file):
+        self._client_certificate_file = client_certificate_file
     
-    def get_key(self):
-        return self._key
+    def get_private_key_file(self):
+        return self._private_key_file
     
-    def set_key(self, key):
-        self._key = key
+    def set_private_key_file(self, private_key_file):
+        self._private_key_file = private_key_file
     
     def get_request_method(self):
         return self._request_method

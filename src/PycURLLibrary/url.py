@@ -122,8 +122,8 @@ class Url(object):
         if self._insecure:
             c.setopt(pycurl.SSL_VERIFYPEER, False)
            
-        if self.get_context().get_cert() is not None:
-            cert = self.get_context().get_cert();
+        if self.get_context().get_client_certificate_file() is not None:
+            cert = self.get_context().get_client_certificate_file();
             self._logger.info("Client Certificate File %s" % (cert))
             try:
                 c.setopt(pycurl.SSLCERT, cert)
@@ -140,8 +140,8 @@ class Url(object):
                 self._logger.warn("Wrong setopt CAPATH value %s" % (capath))
                 raise TypeError(t)
             
-        if self.get_context().get_key() is not None:
-            privateKey = self.get_context().get_key()
+        if self.get_context().get_private_key_file() is not None:
+            privateKey = self.get_context().get_private_key_file()
             self._logger.info("Private Key File %s" % (privateKey))
             try:
                 c.setopt(pycurl.SSLKEY, privateKey)
