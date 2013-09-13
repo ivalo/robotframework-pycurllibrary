@@ -125,21 +125,41 @@ class Url(object):
         if self.get_context().get_cert() is not None:
             cert = self.get_context().get_cert();
             self._logger.info("Client Certificate File %s" % (cert))
-            c.setopt(pycurl.SSLCERT, cert)
+            try:
+                c.setopt(pycurl.SSLCERT, cert)
+            except TypeError, t:
+                self._logger.warn("Wrong setopt SSLCERT value %s" % (cert))
+                raise TypeError(t)
             
         if self.get_context().get_capath() is not None:
-            c.setopt(pycurl.CAPATH, self.get_context().get_capath())
+            capath = self.get_context().get_capath();
+            self._logger.info("CA Path %s" % (capath))
+            try:
+                c.setopt(pycurl.CAPATH, capath)
+            except TypeError, t:
+                self._logger.warn("Wrong setopt CAPATH value %s" % (capath))
+                raise TypeError(t)
             
         if self.get_context().get_key() is not None:
             privateKey = self.get_context().get_key()
             self._logger.info("Private Key File %s" % (privateKey))
-            c.setopt(pycurl.SSLKEY, privateKey)
+            try:
+                c.setopt(pycurl.SSLKEY, privateKey)
+            except TypeError, t:
+                self._logger.warn("Wrong setopt SSLKEY value %s" % (privateKey))
+                raise TypeError(t)
             
-        c.setopt(pycurl.URL, self.get_context().get_url())
+        self._logger.info("URL %s" % (self.get_context().get_url()))
+        try:
+            c.setopt(pycurl.URL, self.get_context().get_url())
+        except TypeError, t:
+            self._logger.warn("Wrong setopt URL value %s" % (self.get_context().get_url()))
+            raise TypeError(t)
+        
         bufResponse = cStringIO.StringIO()
         c.setopt(pycurl.WRITEFUNCTION, bufResponse.write)
-        self._logger.info("Perform for %s" % (self.get_context().get_url()))
-                                                              
+        
+        self._logger.info("Perform %s" % (self.get_context().get_url()))                                                       
         c.perform()
         
         for case in switch(protocol):
@@ -169,13 +189,21 @@ class Url(object):
             self._logger.info("No Post Fields")
         else:
             self._logger.info("Post Fields %s" % (self._post_fields))
-            c.setopt(pycurl.POSTFIELDS, str(self._post_fields))
+            try:
+                c.setopt(pycurl.POSTFIELDS, str(self._post_fields))
+            except TypeError, t:
+                self._logger.warn("Wrong setopt POSTFIELDS value %s" % (self._post_fields))
+                raise TypeError(t)
 
         headers = self.get_context().get_headers() 
         
         self._logger.info(headers)
         if headers:
-            c.setopt(pycurl.HTTPHEADER, headers)
+            try:
+                c.setopt(pycurl.HTTPHEADER, headers)
+            except TypeError, t:
+                self._logger.warn("Wrong setopt HTTPHEADER value %s" % (headers))
+                raise TypeError(t)
         else:
             self._logger.info("Empty headers")
 
