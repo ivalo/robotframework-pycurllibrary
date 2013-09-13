@@ -173,7 +173,7 @@ class PycURLLibrary():
         
         Equivalent for <--capath> argument with curl
         """
-        self._url.get_context().set_capath(cacertDirectory)
+        self._url.get_context().set_capath(str(cacertDirectory))
         
     def client_certificate_file(self, cert):
         """(SSL) Tells curl to use the specified client certificate file when getting a file with HTTPS, 
@@ -181,7 +181,7 @@ class PycURLLibrary():
 
         Equivalent for <--cert> argument with curl
         """
-        self._url.get_context().set_client_certificate_file(cert)
+        self._url.get_context().set_client_certificate_file(str(cert))
         
     def private_key_file(self, key):
         """(SSL/SSH) Private key file name. 
@@ -189,7 +189,7 @@ class PycURLLibrary():
 
         Equivalent for <--key> argument with curl
         """
-        self._url.get_context().set_private_key_file(key)
+        self._url.get_context().set_private_key_file(str(key))
         
     def perform(self):
         """Perform curl perform.
