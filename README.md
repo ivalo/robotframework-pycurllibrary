@@ -11,13 +11,23 @@ It supports FTP, FTPS, HTTP, HTTPS, SCP, SFTP, TFTP, TELNET, DICT, LDAP, LDAPS, 
 
 ### Prerequisite
 
-Python-dev
-PycUrl must be installed.
+- cURL must be installed
+- Python-dev should be instaled
+- If PycUrl installation failed during *PycURLLibrary* installation, install it separately.
 
 #### Ubuntu
-sudo apt-get install python-dev
-sudo apt-get install python-pycurl
+- sudo apt-get install curl
+- sudo apt-get install python-dev
 
+- sudo apt-get install python-pycurl or sudo pip env ARCHFLAGS="-arch x86_64" pip install pycurl
+
+#### Windows
+
+For cURL and pycURL installation look here:
+
+- cURL downloads: http://curl.haxx.se/download.html.
+
+- pycURL downloads: http://pycurl.sourceforge.net/download/ or try this **pip install pycurl**
 
 ### Installing using pip (recommended)
 
