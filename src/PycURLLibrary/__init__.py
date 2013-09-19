@@ -229,6 +229,8 @@ class PycURLLibrary():
     
     def find_elements(self, element, xpath):
         """Returns a list containing all matching elements in document order
+        
+        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
         """
         assert element is not None, \
             'Element is Null.' 

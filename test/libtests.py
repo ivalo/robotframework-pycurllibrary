@@ -122,6 +122,10 @@ class Test(unittest.TestCase):
         print root
         elems = lib.find_elements(root, 'country')
         print elems
+        elems = lib.find_elements(root, './/{http://ws.poc.jivalo/hello/v1}customer')
+        print elems
+        elems = lib.find_elements(root, './/name')
+        print elems
         pass
 
 if __name__ == "__main__":
