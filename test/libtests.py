@@ -120,6 +120,8 @@ class Test(unittest.TestCase):
         print responseStatus
         root = lib.parse_xml()
         print root
+        elems = lib.find_elements(root, 'country')
+        print elems
         pass
 
 if __name__ == "__main__":

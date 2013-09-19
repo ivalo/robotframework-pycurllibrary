@@ -226,6 +226,14 @@ class PycURLLibrary():
         """Parses an XML section of the response. Returns an root Element instance.
         """
         return ET.fromstring(self._url.get_context().get_response())
+    
+    def find_elements(self, element, xpath):
+        """Returns a list containing all matching elements in document order
+        """
+        assert element is not None, \
+            'Element is Null.' 
+        xp = str(xpath)
+        return element.findall(xp)
         
     def http_response_status(self):
         """Get response status from latest HTTP response status line
