@@ -140,6 +140,9 @@ class Test(unittest.TestCase):
         
         lib.element_should_contain(elems[0], 'Hello, world!')
         
+        elem = lib.find_first_element(root, './/name')
+        print elem
+        
         try:
             lib.element_should_contain(elems[0], 'Hello')
         except AssertionError, a:

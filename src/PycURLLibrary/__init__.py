@@ -237,6 +237,16 @@ class PycURLLibrary():
         xp = str(xpath)
         return element.findall(xp)
     
+    def find_first_element(self, element, xpath):
+        """Finds the first subelement matching match. match may be a tag name or path. Returns an element instance or None.
+        
+        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
+        """
+        assert element is not None, \
+            'Element is Null.' 
+        xp = str(xpath)
+        return element.find(xp)
+    
     def should_contain_element(self, element, xpath):
         """Fails if the 'element' does not contain 'xpath' element       
         """
