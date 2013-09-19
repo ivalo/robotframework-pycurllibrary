@@ -55,7 +55,6 @@ setup(
     package_dir      = {'': 'src'},
     packages         = ['PycURLLibrary'],
     install_requires = [
-                        'robotframework >= 2.7.5', 
-                        'pycurl>=7.19'
+                        'robotframework >= 2.7.5' 
                        ]
 )
