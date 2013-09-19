@@ -137,9 +137,19 @@ class Test(unittest.TestCase):
         for el in elems:
             print el.tag
             print el.text
+        
+        lib.element_should_contain(elems[0], 'Hello, world!')
+        
+        try:
+            lib.element_should_contain(elems[0], 'Hello')
+        except AssertionError, a:
+            print a
+                
+        try:
+            lib.should_contain_element(root, './country')
+        except AssertionError, a:
+            print a
             
-            
-        lib.should_contain_element(root, './country')
         pass
 
 if __name__ == "__main__":

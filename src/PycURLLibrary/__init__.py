@@ -238,13 +238,19 @@ class PycURLLibrary():
         return element.findall(xp)
     
     def should_contain_element(self, element, xpath):
-        """Fails if the 'element' does not contain 'xpath' element
-        
+        """Fails if the 'element' does not contain 'xpath' element       
         """
         elements = self.find_elements(element, xpath)
         assert elements, \
             'Element "%s" contains not XPaht element "%s".'  % (
             element.tag, xpath)
+            
+    def element_should_contain(self, element, text):
+        """Fails if the 'element' text value does not contain 'text'      
+        """
+        assert text == element.text, \
+            'Element "%s" does not contains text "%s".'  % (
+            element.tag, text)
             
     def http_response_status(self):
         """Get response status from latest HTTP response status line
