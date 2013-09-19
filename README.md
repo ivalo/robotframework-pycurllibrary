@@ -23,13 +23,13 @@ It supports FTP, FTPS, HTTP, HTTPS, SCP, SFTP, TFTP, TELNET, DICT, LDAP, LDAPS, 
 
 - PycURL build from source; see information below
 
-##### Debian Build OpenSSH PycURL
+##### Debian Build OpenSSL PycURL
 
-If connection establishemnt failes with message then GnuTLS is used for SSH connections:
+If connection establishemnt failes with message then GnuTLS is used for SSL connections:
 
         gnutls_handshake() failed: A TLS fatal alert has been received.
 
-Then OpenSSH must be used for SSH connections. Verify GnuTLS:
+Then OpenSSL must be used for SSH connections. Verify GnuTLS:
 
         >>> import pycurl
         >>> pycurl.version
@@ -37,15 +37,21 @@ Then OpenSSH must be used for SSH connections. Verify GnuTLS:
 
 
 1. sudo apt-get install build-essential fakeroot dpkg-dev
-2. mkdir ~/python-pycurl-openssl
-3. cd ~/python-pycurl-openssl
-4. sudo apt-get source python-pycurl
-5. sudo apt-get install libcurl4-openssl-dev
-6. sudo dpkg-source -x pycurl\_7.19.0-4ubuntu3.dsc \(pycurl\_7* starting file can be other name\)
-7. cd pycurl\_7.19.0
-8. Edit the debian/control file and replace all instances of "libcurl4-gnutls-dev" to "libcurl4-openssl-dev"
-9. sudo dpkg-buildpackage -rfakeroot -b
-10. sudo dpkg -i ../python-pycurl\_7.19.0-4ubuntu3\_amd64.deb
+2. sudo apt-get install libcurl4-openssl-dev
+3. mkdir ~/python-pycurl-openssl
+4. cd ~/python-pycurl-openssl
+5. apt-get source python-pycurl
+6. cd pycurl\_7.19.0
+7. Edit the debian/control file and replace all instances of "libcurl4-gnutls-dev" to "libcurl4-openssl-dev"
+8. Edit the debian/pathes/10\_setup.py.dpatch file and replace HAVE\_CURL\_GNUTLS with HAVE\_CURL\_OPENSSL
+9. Edit the debian/changelog file by adding new version
+        pycurl (7.19.0-4ubuntu3+openssl) precise; urgency=low
+
+          * Rebuild to use OpenSSL dependency instead GnuTLS.
+
+         -- Markku Saarela <ivalo@iki.fi>  Wed, 18 Sep 2013 09:15:26 +0000
+10. dpkg-buildpackage -rfakeroot -b
+11. sudo dpkg -i ../python-pycurl\_7.19.0-4ubuntu3+openssl\_amd64.deb
 
 After this procedure output should be following:
 
@@ -57,7 +63,7 @@ For cURL and pycURL installation look here:
 
 - cURL downloads: http://curl.haxx.se/download.html.
 
-- pycURL downloads: http://pycurl.sourceforge.net/download/  \(Select OpenSSH version\)
+- pycURL downloads: http://pycurl.sourceforge.net/download/  \(Select OpenSSL version\)
 
 ### Installing using pip (recommended)
 
