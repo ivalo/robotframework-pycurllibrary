@@ -122,10 +122,24 @@ class Test(unittest.TestCase):
         print root
         elems = lib.find_elements(root, 'country')
         print elems
+        if not elems:
+            print 'country empty'
         elems = lib.find_elements(root, './/{http://ws.poc.jivalo/hello/v1}customer')
+        if not elems:
+            print 'customer empty'
         print elems
+        for el in elems:
+            print el.tag
+
         elems = lib.find_elements(root, './/name')
+        lib.should_contain_element(root, './/name')
         print elems
+        for el in elems:
+            print el.tag
+            print el.text
+            
+            
+        lib.should_contain_element(root, './country')
         pass
 
 if __name__ == "__main__":

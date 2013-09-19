@@ -236,7 +236,16 @@ class PycURLLibrary():
             'Element is Null.' 
         xp = str(xpath)
         return element.findall(xp)
+    
+    def should_contain_element(self, element, xpath):
+        """Fails if the 'element' does not contain 'xpath' element
         
+        """
+        elements = self.find_elements(element, xpath)
+        assert elements, \
+            'Element "%s" contains not XPaht element "%s".'  % (
+            element.tag, xpath)
+            
     def http_response_status(self):
         """Get response status from latest HTTP response status line
         """
