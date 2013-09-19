@@ -22,6 +22,10 @@ Created on 28 May 2013
 @author: Markku Saarela
 '''
 import unittest
+import testenv
+from os.path import join
+from PycURLLibrary import PycURLLibrary
+import xml.etree.ElementTree as ET
 
 class Test(unittest.TestCase):
 
@@ -31,15 +35,21 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testStringHandling(self):
-        header = 'HTTP/1.1 200 OK\nX-Backside-Transport: FAIL FAIL\nConnection: Keep-Alive\nTransfer-Encoding: chunked\nContent-Type: text/xml\n'
-        headerLines = header.splitlines()
-        print headerLines 
-        statusLine = headerLines[0]
-        isHttpStatusLine = statusLine.upper().startswith('HTTP')
-        print isHttpStatusLine
-        print statusLine
+    def testXpath(self):
+        xmlFile = join(testenv.ROOT_DIR, 'country-data.xml')
+        print xmlFile
+        f = open(xmlFile, 'r')
+        xml = f.read()
+        f.close()
+        
+        root = ET.fromstring(xml)
+        print root
+        elements = root.findall("./country/neighbor")
+        for el in elements:
+            print el
+            
         pass
+
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
