@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <groupId>jivalo.rf</groupId>
+  <artifactId>robotframework-pycurllibrary</artifactId>
+  <version>0.9-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <!-- Build Settings -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <version>0.9.4</version>
+            <!--includeOpenIssues>false</includeOpenIssues-->
+          <onlyCurrentVersion>false</onlyCurrentVersion>
+          <issueManagementSystems>
+            <issueManagementSystem>GitHub</issueManagementSystem>
+          </issueManagementSystems>
+        </configuration>
+      </plugin>
+    </plugins>
+    
+    <pluginManagement>
+      <plugins>
+       <!-- Reporting -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-changes-plugin</artifactId>
+          <version>2.9</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  
+  <!-- More Project Information -->
+  <name>jIvalo robotframework-pycurllibrary</name>
+  <url>https://github.com/ivalo/robotframework-pycurllibrary</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <id>ivalo</id>
+      <name>Markku Saarela</name>
+      <email>ivalo@iki.fi</email>
+      <timezone>2</timezone>
+    </developer>
+  </developers>
+  
+  <!-- Environment Settings -->
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/ivalo/robotframework-pycurllibrary/issues</url>
+  </issueManagement>
+  
+</project>

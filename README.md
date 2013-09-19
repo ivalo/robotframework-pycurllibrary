@@ -80,13 +80,19 @@ Install it with following command:
 
         pip install robotframework-pycurllibrary --upgrade
 
-## Distribution
+## Developer instructions
+
+Following instructions are for developers.
+
+### Distribution
 
         python setup.py register
         python setup.py sdist upload
 
-## Generate Keyword document
+### Generate Keyword document
 
         python -m robot.libdoc src/PycURLLibrary PycURLLibrary.html
 
+### Generate Release Notes document
 
+        mvn changes:announcement-generate
