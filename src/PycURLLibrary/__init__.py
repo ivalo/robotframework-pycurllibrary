@@ -25,6 +25,7 @@ from functools import wraps
 
 import pycurl
 from url import Url
+import xml.etree.ElementTree as ET
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 execfile(os.path.join(THIS_DIR, 'version.py'))
@@ -44,6 +45,21 @@ class PycURLLibrary():
 
     PycURLLibrary is based on PycURL [http://pycurl.sourceforge.net/], 
     PycURL is a Python interface to libcurl [http://curl.haxx.se/libcurl/].
+    
+    xml.etree.ElementTree [http://docs.python.org/2/library/xml.etree.elementtree.html] is used for XML operations.
+
+    Supported XPath syntax (from Python v2.7.5 documentation):
+
+    | Syntax | Meaning |
+    | tag    | Selects all child elements with the given tag. For example, spam selects all child elements named spam, spam/egg selects all grandchildren named egg in all children named spam. |
+    | *      | Selects all child elements. For example, */egg selects all grandchildren named egg. |
+    | .      | Selects the current node. This is mostly useful at the beginning of the path, to indicate that it’s a relative path. |
+    | //     | Selects all subelements, on all levels beneath the current element. For example, .//egg selects all egg elements in the entire tree. |
+    | ..     | Selects the parent element. |
+    | [@attrib] | Selects all elements that have the given attribute. |
+    | [@attrib='value'] | Selects all elements for which the given attribute has the given value. The value cannot contain quotes. |
+    | [tag]  | Selects all elements that have a child named tag. Only immediate children are supported. |
+    | [position] | Selects all elements that are located at the given position. The position can be either an integer (1 is the first position), the expression last() (for the last position), or a position relative to the last position (e.g. last()-1). |
     """
     
     ROBOT_LIBRARY_VERSION = VERSION
@@ -206,6 +222,46 @@ class PycURLLibrary():
         """
         return self._url.get_context().get_response_headers()
 
+    def parse_xml(self):
+        """Parses an XML section of the response. Returns an root Element instance.
+        """
+        return ET.fromstring(self._url.get_context().get_response())
+    
+    def find_elements(self, element, xpath):
+        """Returns a list containing all matching elements in document order
+        
+        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
+        """
+        assert element is not None, \
+            'Element is Null.' 
+        xp = str(xpath)
+        return element.findall(xp)
+    
+    def find_first_element(self, element, xpath):
+        """Finds the first subelement matching match. match may be a tag name or path. Returns an element instance or None.
+        
+        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
+        """
+        assert element is not None, \
+            'Element is Null.' 
+        xp = str(xpath)
+        return element.find(xp)
+    
+    def should_contain_element(self, element, xpath):
+        """Fails if the 'element' does not contain 'xpath' element       
+        """
+        elements = self.find_elements(element, xpath)
+        assert elements, \
+            'Element "%s" contains not XPaht element "%s".'  % (
+            element.tag, xpath)
+            
+    def element_should_contain(self, element, text):
+        """Fails if the 'element' text value does not contain 'text'      
+        """
+        assert text == element.text, \
+            'Element "%s" does not contains text "%s".'  % (
+            element.tag, text)
+            
     def http_response_status(self):
         """Get response status from latest HTTP response status line
         """

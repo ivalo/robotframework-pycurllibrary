@@ -121,7 +121,10 @@ class Url(object):
         bufResponse = cStringIO.StringIO()
         c.setopt(pycurl.WRITEFUNCTION, bufResponse.write)
         
-        self._logger.info("Perform %s" % (self.get_context().get_url()))                                                       
+        self._logger.info("Perform %s" % (self.get_context().get_url()))
+        c.setopt(pycurl.SSL_VERIFYPEER, 0)
+        c.setopt(pycurl.SSL_VERIFYHOST, 0)
+                                                     
         c.perform()
         
         for case in switch(protocol):
@@ -141,7 +144,6 @@ class Url(object):
                 
         self.get_context().set_response(bufResponse.getvalue())
         bufResponse.close()
-        self._logger.info(self.get_context().get_response())
         
     def _setCurlSetopts(self, c):
         """

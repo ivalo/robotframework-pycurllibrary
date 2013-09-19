@@ -118,39 +118,42 @@ class Test(unittest.TestCase):
         responseStatus = lib.http_response_status()
         print 'HTTP Response Status:'
         print responseStatus
-        pass
+        root = lib.parse_xml()
+        print root
+        elems = lib.find_elements(root, 'country')
+        print elems
+        if not elems:
+            print 'country empty'
+        elems = lib.find_elements(root, './/{http://ws.poc.jivalo/hello/v1}customer')
+        if not elems:
+            print 'customer empty'
+        print elems
+        for el in elems:
+            print el.tag
 
-    def testcerts(self):
-        lib = PycURLLibrary();
-        messageFile = join(testenv.ROOT_DIR, 'soap-request.xml')
-        clientCertFile = join(testenv.ROOT_DIR, 'DPKehit1.cer')
-        privateKeyFile = join(testenv.ROOT_DIR, 'DPKehit1-privkey.pem')
-        print messageFile
-        print clientCertFile
-        print privateKeyFile
+        elems = lib.find_elements(root, './/name')
+        lib.should_contain_element(root, './/name')
+        print elems
+        for el in elems:
+            print el.tag
+            print el.text
         
-        lib.verbose()
+        lib.element_should_contain(elems[0], 'Hello, world!')
         
-        lib.server_connection_establishment_timeout('30')
-        lib.set_url('http://localhost:53004/soap')
-
-        lib.post_fields_file(messageFile)
-        lib.client_certificate_file(clientCertFile)
-        lib.private_key_file(privateKeyFile)
-        lib.perform()
-        response = lib.response()
-        if response is None:
-            raise NotImplementedError
-        print 'POST Response:'
-        print response
-        responseHeader = lib.response_headers()
-        print 'POST Response Headers:'
-        print responseHeader
-        responseStatus = lib.http_response_status()
-        print 'HTTP Response Status:'
-        print responseStatus
+        elem = lib.find_first_element(root, './/name')
+        print elem
+        
+        try:
+            lib.element_should_contain(elems[0], 'Hello')
+        except AssertionError, a:
+            print a
+                
+        try:
+            lib.should_contain_element(root, './country')
+        except AssertionError, a:
+            print a
+            
         pass
-
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
