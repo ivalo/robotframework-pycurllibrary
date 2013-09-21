@@ -34,7 +34,7 @@ Example:
   </tr>
   <tr>
     <td>My Test</td>
-    <td>\[Documentation\]</td>
+    <td>[Documentation]</td>
     <td>Example test</td>
     <td></td>
     <td></td>
