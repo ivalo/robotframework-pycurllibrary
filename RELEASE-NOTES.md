@@ -1,6 +1,14 @@
 Release Notes
 ============================
 
+## 0.9.5 on 2013-09-21
+
+### New features:
+- Add Element Should Match 
+- Add keyword Response Status Should Contain 
+- Add keyword Xml Root Element 
+- Add Maven configuration for generating release notes 
+
 ## 0.9.4 on 2013-09-19
 
 ### New features:
