@@ -118,29 +118,32 @@ class Test(unittest.TestCase):
         responseStatus = lib.http_response_status()
         print 'HTTP Response Status:'
         print responseStatus
+        lib.response_status_should_contain(unicode('200'))
         root = lib.parse_xml()
         print root
-        elems = lib.find_elements(root, 'country')
+        root = lib.xml_root_element()
+        print root
+        elems = lib.find_elements(root, unicode('country'))
         print elems
         if not elems:
             print 'country empty'
-        elems = lib.find_elements(root, './/{http://ws.poc.jivalo/hello/v1}customer')
+        elems = lib.find_elements(root, unicode('.//{http://ws.poc.jivalo/hello/v1}customer'))
         if not elems:
             print 'customer empty'
         print elems
         for el in elems:
             print el.tag
 
-        elems = lib.find_elements(root, './/name')
-        lib.should_contain_element(root, './/name')
+        elems = lib.find_elements(root, unicode('.//name'))
+        lib.should_contain_element(root, unicode('.//name'))
         print elems
         for el in elems:
             print el.tag
             print el.text
         
-        lib.element_should_contain(elems[0], 'Hello, world!')
+        lib.element_should_contain(elems[0], unicode('Hello, world!'))
         
-        elem = lib.find_first_element(root, './/name')
+        elem = lib.find_first_element(root, unicode('.//name'))
         print elem
         
         try:

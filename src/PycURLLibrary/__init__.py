@@ -25,7 +25,6 @@ from functools import wraps
 
 import pycurl
 from url import Url
-import xml.etree.ElementTree as ET
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 execfile(os.path.join(THIS_DIR, 'version.py'))
@@ -136,6 +135,7 @@ class PycURLLibrary():
         
         One line is one header. Note do not make line feed after last header.
 
+        Example:
         | Headers File | /data/headers.txt |
         
         Example of content of *headerFile*:
@@ -183,7 +183,7 @@ class PycURLLibrary():
         self._url.get_context().set_url(str(url))
         
     def ca_path(self, cacertDirectory):
-        """((SSL) Tells curl to use the specified certificate directory to verify the peer. 
+        """(SSL) Tells curl to use the specified certificate directory to verify the peer. 
         Multiple paths can be provided by separating them with ":" (e.g. "path1:path2:path3"). 
         The certificates must be in PEM format. 
         
@@ -225,12 +225,19 @@ class PycURLLibrary():
     def parse_xml(self):
         """Parses an XML section of the response. Returns an root Element instance.
         """
-        return ET.fromstring(self._url.get_context().get_response())
+        return self._url.get_context().parse_response_xml()
+
+    def xml_root_element(self):
+        """Returns the result root Element instance of `Parse Xml` keyword.
+        """
+        return self._url.get_context().get_xml_root_element()
     
     def find_elements(self, element, xpath):
         """Returns a list containing all matching elements in document order
         
-        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
+        Examples:
+        | Find Elements | ${root} | .//{http://ws.poc.jivalo/hello/v1}customer |
+        | Find Elements | ${root} | .//name |
         """
         assert element is not None, \
             'Element is Null.' 
@@ -238,9 +245,11 @@ class PycURLLibrary():
         return element.findall(xp)
     
     def find_first_element(self, element, xpath):
-        """Finds the first subelement matching match. match may be a tag name or path. Returns an element instance or None.
+        """Finds the first subelement matching *xpath*. Match may be a _tag name_ or _path_. Returns an element instance or None.
         
-        XPath Namespace example: './/{http://ws.poc.jivalo/hello/v1}customer'
+        Examples:
+        | Find First Element | ${root} | .//{http://ws.poc.jivalo/hello/v1}customer |
+        | Find First Element | ${root} | .//name |
         """
         assert element is not None, \
             'Element is Null.' 
@@ -248,7 +257,10 @@ class PycURLLibrary():
         return element.find(xp)
     
     def should_contain_element(self, element, xpath):
-        """Fails if the 'element' does not contain 'xpath' element       
+        """Fails if the *element* does not contain *xpath* element       
+        Examples:
+        | Should Contain Element | ${root} | .//{http://ws.poc.jivalo/hello/v1}customer |
+        | Should Contain Element | ${root} | .//name |
         """
         elements = self.find_elements(element, xpath)
         assert elements, \
@@ -256,10 +268,21 @@ class PycURLLibrary():
             element.tag, xpath)
             
     def element_should_contain(self, element, text):
-        """Fails if the 'element' text value does not contain 'text'      
+        """Fails if the *element* text value does not contain *text*      
+        Examples:
+        | Element Should Contain | ${elem} | Hello, world! |
+        """
+        assert text in element.text, \
+            'Element "%s" does not contains text "%s".'  % (
+            element.tag, text)
+            
+    def element_should_match(self, element, text):
+        """Fails if the *element* text value does not match *text*      
+        Examples:
+        | Element Should Match | ${elem} | Hello, world! |
         """
         assert text == element.text, \
-            'Element "%s" does not contains text "%s".'  % (
+            'Element "%s" does not match text "%s".'  % (
             element.tag, text)
             
     def http_response_status(self):
@@ -267,11 +290,20 @@ class PycURLLibrary():
         """
         return self._url.get_context().get_response_status()
 
+    def response_status_should_contain(self, text):
+        """Fails if the _Response Status_  does not contain *text*      
+        Examples:
+        | Response Status Should Contain | 200 |
+        """
+        assert str(text) in str(self.http_response_status()), \
+            'Response Status "%s" does not contains text "%s".'  % (
+            self.http_response_status(), text)
+        
     def log_response(self, log_level='INFO'):
         """
         Logs the response of the URL transfer.
 
-        Specify `log_level` (default: "INFO") to set the log level.
+        Specify *log_level* (default: "INFO") to set the log level.
         """        
         if self.response():
             self._logger.write("Response body:", log_level)
@@ -283,7 +315,7 @@ class PycURLLibrary():
         """
         Logs the response headers for protocols having headers preceding the data (like HTTP), line by line.
 
-        Specify `log_level` (default: "INFO") to set the log level.
+        Specify *log_level* (default: "INFO") to set the log level.
         """        
         if self.response_headers():
             self._logger.write("HTTP Response headers:", log_level)
@@ -297,7 +329,7 @@ class PycURLLibrary():
         """
         Logs the HTTP response header status line.
 
-        Specify `log_level` (default: "INFO") to set the log level.
+        Specify *log_level* (default: "INFO") to set the log level.
         """        
         if self.http_response_status():
             self._logger.write("HTTP Response status:", log_level)
@@ -309,6 +341,6 @@ class PycURLLibrary():
         """
         Logs the PycURLLibrary Version.
 
-        Specify `log_level` (default: "INFO") to set the log level.
+        Specify *log_level* (default: "INFO") to set the log level.
         """
         self._logger.write("PycURLLibrary version %s" % (self.ROBOT_LIBRARY_VERSION), log_level)

@@ -26,14 +26,9 @@ Simple Soap
     Post Fields  ${message}
     Perform
     Log Response
-        
-Simple Soap Headers File
-    Verbose
-    Set Url  http://localhost:53004/soap
-    Headers File  /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/headers-file.txt
-    Cert  /home/ivalo/git/robotframework-pycurllibrary/DPKehit1.cer
-    Key  /home/ivalo/git/robotframework-pycurllibrary/DPKehit1-privkey.pem
-    Post Fields File   /home/ivalo/git/robotframework-pycurllibrary/tests/acceptance/soap-request.xml
-    Perform
-    Log Response
-        
+    Response Status Should Contain    200
+    ${root}=    Parse Xml
+    Should Contain Element    ${root}   .//{http://ws.poc.jivalo/hello/v1}customer
+    ${elem}=    Find First Element    ${root}    .//name
+    Element Should Contain    ${elem}    Hello, world!
+

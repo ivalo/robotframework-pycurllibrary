@@ -21,6 +21,7 @@ Created on 30 May 2013
 
 @author: Markku Saarela
 '''
+import xml.etree.ElementTree as ET
 
 class Ctx(object):
     def __init__(self):
@@ -35,6 +36,7 @@ class Ctx(object):
         self._request_method = 'GET'
         self._response_status = None
         self._server_connection_establishment_timeout = None
+        self._xml_root_element = None
         
     def get_url(self):
         return self._url
@@ -104,6 +106,13 @@ class Ctx(object):
 
     def get_protocol(self):
         return self._protocol
+    
+    def parse_response_xml(self): 
+        self._xml_root_element = ET.fromstring(self.get_response())
+        return self.get_xml_root_element()
+    
+    def get_xml_root_element(self):
+        return self._xml_root_element
 
     def _parse_protocol(self, url):
         i = url.find(':')
