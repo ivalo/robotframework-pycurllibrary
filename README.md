@@ -7,15 +7,147 @@ It supports FTP, FTPS, HTTP, HTTPS, SCP, SFTP, TFTP, TELNET, DICT, LDAP, LDAPS, 
 
 [Keyword documentation](http://ivalo.github.io/robotframework-pycurllibrary/).
 
+## Usage
+
+Example:
+
+<table border="1">
+  <tr>
+    <th>Setting</th>
+    <th>Value</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Library</td>
+    <td>PycURLLibrary</td>
+    <td></td>
+  </tr>
+</table> 
+
+<table border="1">
+  <tr>
+    <th>Test Case</th>
+    <th>Action</th>
+    <th>Argument</th>
+    <th>Argument</th>
+    <th>Argument</th>
+  </tr>
+  <tr>
+    <td>My Test</td>
+    <td>\[Documentation\]</td>
+    <td>Example test</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Verbose</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Insecure Ssl</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Set Url</td>
+    <td>http://localhost:53004/soap</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Headers File</td>
+    <td>./headers-file.txt</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Client Certificate File</td>
+    <td>./client_cert.cer</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Private Key File</td>
+    <td>./privkey.pem</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Post Fields File</td>
+    <td>./soap-request.xml</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Perform</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Log Response</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Response Status Should Contain</td>
+    <td>200</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>${root}=</td>
+    <td>Parse Xml</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Should Contain Element</td>
+    <td>${root}</td>
+    <td>.//{http://ws.poc.jivalo/hello/v1}customer</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>${elem}=</td>
+    <td>Find First Element</td>
+    <td>${root}</td>
+    <td>.//name</td>
+ </tr>
+  <tr>
+    <td></td>
+    <td>Element Should Contain</td>
+    <td>${elem}</td>
+    <td>Hello, world!</td>
+    <td></td>
+  </tr>
+</table> 
+
 ## Installation
 
 ### Prerequisite
 
 - cURL must be installed
-- Python-dev should be instaled
-- If PycUrl installation failed during *PycURLLibrary* installation, install it separately.
+- PycUrl must be installed.
+- Python-dev should be installed
 
-**NOTE: PycURL must be linked with OpenSSL not GnuTLS (Unfortunately at least Debian based distribution has wrong SSL library linked with) in order to work properly.**
+**NOTE: PycURL must not be binded with GnuTLS (Unfortunately at least Debian based distribution has wrong SSL library binded with; OpenSSL should be used instead) in order to work properly.**
 
 #### Ubuntu
 - sudo apt-get install curl
@@ -86,19 +218,4 @@ Install it with following command:
 
         pip install robotframework-pycurllibrary --upgrade
 
-## Developer instructions
 
-Following instructions are for developers.
-
-### Distribution
-
-        python setup.py register
-        python setup.py sdist upload
-
-### Generate Keyword document
-
-        python -m robot.libdoc src/PycURLLibrary PycURLLibrary.html
-
-### Generate Release Notes document
-
-        mvn changes:announcement-generate
